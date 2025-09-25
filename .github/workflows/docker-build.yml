@@ -37,4 +37,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/yevgen-moldawski_msggroup/timertask-backend:latest
+          tags: ghcr.io/yevgen-moldawski/timertask-backend:latest
