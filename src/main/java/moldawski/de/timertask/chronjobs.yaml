@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: timertask-cli-job
+spec:
+  schedule: "*/10 * * * *" # every 10 minutes, adjust as needed
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: timertask-cli
+              image: <your-image>:<tag>
+              imagePullPolicy: IfNotPresent
+              command: ["java", "-cp", "/app/classes:/app/libs/*", "moldawski.de.timertask.TimerTaskCliApp"]
+              # Adjust classpath and image layout to your build output
+          restartPolicy: OnFailure
