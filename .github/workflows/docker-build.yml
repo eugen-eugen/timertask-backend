@@ -32,12 +32,12 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: eugen-eugen
+          password: ${{ secrets.EUGEN_EUGEN_TOKEN }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: ghcr.io/yevgen-moldawski_msggroup/timertask-backend:latest
+          tags: ghcr.io/eugen-eugen/timertask-backend:latest
