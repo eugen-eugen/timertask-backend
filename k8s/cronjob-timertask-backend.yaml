@@ -1,0 +1,63 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: timertask-backend
+  labels:
+    app: timertask-backend
+spec:
+  schedule: "* * * * *" # every minute
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 30
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      ttlSecondsAfterFinished: 300
+      template:
+        metadata:
+          labels:
+            app: timertask-backend
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: timertask-backend
+              image: ghcr.io/eugen-eugen/timertask-backend:latest
+              imagePullPolicy: IfNotPresent
+              command:
+                - java
+                - -jar
+                - /app/app.jar
+              env:
+                - name: TZ
+                  value: UTC
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  cpu: 250m
+                  memory: 256Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                runAsNonRoot: true
+                capabilities:
+                  drop: ["ALL"]
+                seccompProfile:
+                  type: RuntimeDefault
+          securityContext:
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          # imagePullSecrets:
+          #   - name: ghcr-pull-secret
+
+---
+# Optional ServiceAccount (uncomment if needed for API access)
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   name: timertask-backend
+#   labels:
+#     app: timertask-backend

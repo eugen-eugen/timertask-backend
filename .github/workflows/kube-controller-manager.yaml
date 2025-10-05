@@ -1,0 +1,257 @@
+Name:                 kube-controller-manager-2e-4a-56-84-ba-01
+Namespace:            openshift-kube-controller-manager
+Priority:             2000001000
+Priority Class Name:  system-node-critical
+Node:                 2e-4a-56-84-ba-01/10.16.22.72
+Start Time:           Thu, 02 Oct 2025 17:20:03 +0200
+Labels:               app=kube-controller-manager
+                      kube-controller-manager=true
+                      revision=11
+Annotations:          kubectl.kubernetes.io/default-container: kube-controller-manager
+                      kubernetes.io/config.hash: 770ff4927e4333b112ff003bfe2bb549
+                      kubernetes.io/config.mirror: 770ff4927e4333b112ff003bfe2bb549
+                      kubernetes.io/config.seen: 2025-06-29T12:36:06.656280979Z
+                      kubernetes.io/config.source: file
+                      target.workload.openshift.io/management: {"effect": "PreferredDuringScheduling"}
+Status:               Running
+IP:                   10.16.22.72
+IPs:
+  IP:           10.16.22.72
+Controlled By:  Node/2e-4a-56-84-ba-01
+Containers:
+  kube-controller-manager:
+    Container ID:  cri-o://8b260190f75103daacaf4e30b2ed94c2f266a610ed9c994e0ce9e5f40815e890
+    Image:         quay.io/okd/scos-content@sha256:59f5ee8e2cc0067ebcb8b5c298d68c456969683f0d445510e46ee652e9e90562
+    Image ID:      quay.io/okd/scos-content@sha256:41bd448d74c2818ac4de12143194c077915d716f3c307155841fe201140cea70
+    Port:          10257/TCP
+    Host Port:     10257/TCP
+    Command:
+      /bin/bash
+      -euxo
+      pipefail
+      -c
+    Args:
+      timeout 3m /bin/bash -exuo pipefail -c 'while [ -n "$(ss -Htanop \( sport = 10257 \))" ]; do sleep 1; done'
+      
+      if [ -f /etc/kubernetes/static-pod-certs/configmaps/trusted-ca-bundle/ca-bundle.crt ]; then
+        echo "Copying system trust bundle"
+        cp -f /etc/kubernetes/static-pod-certs/configmaps/trusted-ca-bundle/ca-bundle.crt /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+      fi
+      
+      if [ -f /etc/kubernetes/static-pod-resources/configmaps/cloud-config/ca-bundle.pem ]; then
+        echo "Setting custom CA bundle for cloud provider"
+        export AWS_CA_BUNDLE=/etc/kubernetes/static-pod-resources/configmaps/cloud-config/ca-bundle.pem
+      fi
+      
+      exec hyperkube kube-controller-manager --openshift-config=/etc/kubernetes/static-pod-resources/configmaps/config/config.yaml \
+        --kubeconfig=/etc/kubernetes/static-pod-resources/configmaps/controller-manager-kubeconfig/kubeconfig \
+        --authentication-kubeconfig=/etc/kubernetes/static-pod-resources/configmaps/controller-manager-kubeconfig/kubeconfig \
+        --authorization-kubeconfig=/etc/kubernetes/static-pod-resources/configmaps/controller-manager-kubeconfig/kubeconfig \
+        --client-ca-file=/etc/kubernetes/static-pod-certs/configmaps/client-ca/ca-bundle.crt \
+        --requestheader-client-ca-file=/etc/kubernetes/static-pod-certs/configmaps/aggregator-client-ca/ca-bundle.crt -v=2 --tls-cert-file=/etc/kubernetes/static-pod-resources/secrets/serving-cert/tls.crt --tls-private-key-file=/etc/kubernetes/static-pod-resources/secrets/serving-cert/tls.key --allocate-node-cidrs=false --cert-dir=/var/run/kubernetes --cloud-provider=external --cluster-cidr=10.128.0.0/14 --cluster-name=okdn-mch57 --cluster-signing-cert-file=/etc/kubernetes/static-pod-certs/secrets/csr-signer/tls.crt --cluster-signing-duration=720h --cluster-signing-key-file=/etc/kubernetes/static-pod-certs/secrets/csr-signer/tls.key --controllers=* --controllers=-bootstrapsigner --controllers=-tokencleaner --controllers=-ttl --controllers=selinux-warning-controller --enable-dynamic-provisioning=true --feature-gates=AWSClusterHostedDNS=false --feature-gates=AWSEFSDriverVolumeMetrics=true --feature-gates=AdditionalRoutingCapabilities=true --feature-gates=AdminNetworkPolicy=true --feature-gates=AlibabaPlatform=true --feature-gates=AutomatedEtcdBackup=false --feature-gates=AzureWorkloadIdentity=true --feature-gates=BareMetalLoadBalancer=true --feature-gates=BootcNodeManagement=false --feature-gates=BuildCSIVolumes=true --feature-gates=CPMSMachineNamePrefix=true --feature-gates=ChunkSizeMiB=true --feature-gates=CloudDualStackNodeIPs=true --feature-gates=ClusterAPIInstall=false --feature-gates=ClusterAPIInstallIBMCloud=false --feature-gates=ClusterMonitoringConfig=false --feature-gates=ClusterVersionOperatorConfiguration=false --feature-gates=ConsolePluginContentSecurityPolicy=true --feature-gates=DNSNameResolver=false --feature-gates=DisableKubeletCloudCredentialProviders=true --feature-gates=DualReplica=false --feature-gates=DyanmicServiceEndpointIBMCloud=false --feature-gates=DynamicResourceAllocation=false --feature-gates=EtcdBackendQuota=false --feature-gates=EventedPLEG=false --feature-gates=Example2=false --feature-gates=Example=false --feature-gates=ExternalOIDC=false --feature-gates=ExternalOIDCWithUIDAndExtraClaimMappings=false --feature-gates=GCPClusterHostedDNS=false --feature-gates=GCPCustomAPIEndpoints=false --feature-gates=GCPLabelsTags=true --feature-gates=GatewayAPI=true --feature-gates=GatewayAPIController=true --feature-gates=HardwareSpeed=true --feature-gates=HighlyAvailableArbiter=false --feature-gates=ImageStreamImportMode=false --feature-gates=IngressControllerDynamicConfigurationManager=false --feature-gates=IngressControllerLBSubnetsAWS=true --feature-gates=InsightsConfig=false --feature-gates=InsightsConfigAPI=false --feature-gates=InsightsOnDemandDataGather=false --feature-gates=InsightsRuntimeExtractor=false --feature-gates=KMSEncryptionProvider=false --feature-gates=KMSv1=true --feature-gates=MachineAPIMigration=false --feature-gates=MachineAPIOperatorDisableMachineHealthCheckController=false --feature-gates=MachineAPIProviderOpenStack=false --feature-gates=MachineConfigNodes=false --feature-gates=ManagedBootImages=true --feature-gates=ManagedBootImagesAWS=true --feature-gates=MaxUnavailableStatefulSet=false --feature-gates=MetricsCollectionProfiles=true --feature-gates=MinimumKubeletVersion=false --feature-gates=MixedCPUsAllocation=false --feature-gates=MultiArchInstallAWS=true --feature-gates=MultiArchInstallAzure=false --feature-gates=MultiArchInstallGCP=true --feature-gates=NetworkDiagnosticsConfig=true --feature-gates=NetworkLiveMigration=true --feature-gates=NetworkSegmentation=true --feature-gates=NewOLM=true --feature-gates=NewOLMCatalogdAPIV1Metas=false --feature-gates=NewOLMOwnSingleNamespace=false --feature-gates=NewOLMPreflightPermissionChecks=false --feature-gates=NodeDisruptionPolicy=true --feature-gates=NodeSwap=false --feature-gates=NutanixMultiSubnets=false --feature-gates=OVNObservability=false --feature-gates=OnClusterBuild=true --feature-gates=OpenShiftPodSecurityAdmission=false --feature-gates=PersistentIPsForVirtualization=true --feature-gates=PinnedImages=false --feature-gates=PlatformOperators=false --feature-gates=PrivateHostedZoneAWS=true --feature-gates=ProcMountType=false --feature-gates=RouteAdvertisements=false --feature-gates=RouteExternalCertificate=true --feature-gates=SELinuxChangePolicy=false --feature-gates=SELinuxMount=false --feature-gates=ServiceAccountTokenNodeBinding=true --feature-gates=SetEIPForNLBIngressController=true --feature-gates=ShortCertRotation=false --feature-gates=SignatureStores=false --feature-gates=SigstoreImageVerification=false --feature-gates=SigstoreImageVerificationPKI=false --feature-gates=TranslateStreamCloseWebsocketRequests=false --feature-gates=UpgradeStatus=false --feature-gates=UserNamespacesPodSecurityStandards=false --feature-gates=UserNamespacesSupport=false --feature-gates=VSphereConfigurableMaxAllowedBlockVolumesPerNode=false --feature-gates=VSphereDriverConfiguration=true --feature-gates=VSphereHostVMGroupZonal=false --feature-gates=VSphereMultiDisk=false --feature-gates=VSphereMultiNetworks=false --feature-gates=VSphereMultiVCenters=true --feature-gates=ValidatingAdmissionPolicy=true --feature-gates=VolumeAttributesClass=false --feature-gates=VolumeGroupSnapshot=false --flex-volume-plugin-dir=/etc/kubernetes/kubelet-plugins/volume/exec --kube-api-burst=300 --kube-api-qps=150 --leader-elect-renew-deadline=12s --leader-elect-resource-lock=leases --leader-elect-retry-period=3s --leader-elect=true --pv-recycler-pod-template-filepath-hostpath=/etc/kubernetes/static-pod-resources/configmaps/recycler-config/recycler-pod.yaml --pv-recycler-pod-template-filepath-nfs=/etc/kubernetes/static-pod-resources/configmaps/recycler-config/recycler-pod.yaml --root-ca-file=/etc/kubernetes/static-pod-resources/configmaps/serviceaccount-ca/ca-bundle.crt --secure-port=10257 --service-account-private-key-file=/etc/kubernetes/static-pod-resources/secrets/service-account-private-key/service-account.key --service-cluster-ip-range=172.30.0.0/16 --use-service-account-credentials=true --tls-cipher-suites=TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384,TLS_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 --tls-min-version=VersionTLS12
+    State:          Running
+      Started:      Thu, 02 Oct 2025 17:20:33 +0200
+    Ready:          True
+    Restart Count:  27
+    Requests:
+      cpu:        60m
+      memory:     200Mi
+    Liveness:     http-get https://:10257/healthz delay=45s timeout=10s period=10s #success=1 #failure=3
+    Readiness:    http-get https://:10257/healthz delay=10s timeout=10s period=10s #success=1 #failure=3
+    Startup:      http-get https://:10257/healthz delay=0s timeout=3s period=10s #success=1 #failure=3
+    Environment:  <none>
+    Mounts:
+      /etc/kubernetes/static-pod-certs from cert-dir (rw)
+      /etc/kubernetes/static-pod-resources from resource-dir (rw)
+  cluster-policy-controller:
+    Container ID:  cri-o://3df219c745afce0cc61cc9e4f8acdc33c2cf41013e9f82da3d2772fb9b72042f
+    Image:         quay.io/okd/scos-content@sha256:4da976ce504dda05b7dde7c47c52e26f4de5f4d1f387c11367feee1c0bcaa893
+    Image ID:      quay.io/okd/scos-content@sha256:4da976ce504dda05b7dde7c47c52e26f4de5f4d1f387c11367feee1c0bcaa893
+    Port:          10357/TCP
+    Host Port:     10357/TCP
+    Command:
+      /bin/bash
+      -euxo
+      pipefail
+      -c
+    Args:
+      timeout 3m /bin/bash -exuo pipefail -c 'while [ -n "$(ss -Htanop \( sport = 10357 \))" ]; do sleep 1; done'
+      
+      exec cluster-policy-controller start --config=/etc/kubernetes/static-pod-resources/configmaps/cluster-policy-controller-config/config.yaml \
+        --kubeconfig=/etc/kubernetes/static-pod-resources/configmaps/controller-manager-kubeconfig/kubeconfig \
+        --namespace=${POD_NAMESPACE} -v=2
+    State:       Waiting
+      Reason:    CrashLoopBackOff
+    Last State:  Terminated
+      Reason:    Error
+      Message:   + timeout 3m /bin/bash -exuo pipefail -c 'while [ -n "$(ss -Htanop \( sport = 10357 \))" ]; do sleep 1; done'
+++ ss -Htanop '(' sport = 10357 ')'
++ '[' -n '' ']'
++ exec cluster-policy-controller start --config=/etc/kubernetes/static-pod-resources/configmaps/cluster-policy-controller-config/config.yaml --kubeconfig=/etc/kubernetes/static-pod-resources/configmaps/controller-manager-kubeconfig/kubeconfig --namespace=openshift-kube-controller-manager -v=2
+I1002 17:02:00.427077       1 leaderelection.go:121] The leader election gives 4 retries and allows for 30s of clock skew. The kube-apiserver downtime tolerance is 78s. Worst non-graceful lease acquisition is 2m43s. Worst graceful lease acquisition is {26s}.
+I1002 17:02:00.428133       1 observer_polling.go:159] Starting file observer
+I1002 17:02:00.430186       1 builder.go:304] cluster-policy-controller version v0.0.0-unknown-748524784-748524784
+I1002 17:02:00.431347       1 dynamic_serving_content.go:116] "Loaded a new cert/key pair" name="serving-cert::/etc/kubernetes/static-pod-resources/secrets/serving-cert/tls.crt::/etc/kubernetes/static-pod-resources/secrets/serving-cert/tls.key"
+I1002 17:02:30.012016       1 cmd.go:141] Received SIGTERM or SIGINT signal, shutting down controller.
+F1002 17:02:30.012148       1 cmd.go:182] failed checking apiserver connectivity: Unauthorized
+
+      Exit Code:    255
+      Started:      Thu, 02 Oct 2025 19:02:00 +0200
+      Finished:     Thu, 02 Oct 2025 19:02:30 +0200
+    Ready:          False
+    Restart Count:  2825
+    Requests:
+      cpu:      10m
+      memory:   200Mi
+    Liveness:   http-get https://:10357/healthz delay=45s timeout=10s period=10s #success=1 #failure=3
+    Readiness:  http-get https://:10357/healthz delay=10s timeout=10s period=10s #success=1 #failure=3
+    Startup:    http-get https://:10357/healthz delay=0s timeout=3s period=10s #success=1 #failure=3
+    Environment:
+      POD_NAME:       kube-controller-manager-2e-4a-56-84-ba-01 (v1:metadata.name)
+      POD_NAMESPACE:  openshift-kube-controller-manager (v1:metadata.namespace)
+    Mounts:
+      /etc/kubernetes/static-pod-certs from cert-dir (rw)
+      /etc/kubernetes/static-pod-resources from resource-dir (rw)
+  kube-controller-manager-cert-syncer:
+    Container ID:  cri-o://b9e6bc5d8335b6b76fbb2d002996b34641e5ea2d7aa8e47034ab4d66bff939d6
+    Image:         quay.io/okd/scos-content@sha256:9495d1004cbb8950381ea80897a391971239b0a1fc52783cba6da05f9bdd1de9
+    Image ID:      quay.io/okd/scos-content@sha256:89edc0cd6d0e1d18abd5f9d1896c7f2ee3bf9c9152326ea339cb3c36312e0848
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      cluster-kube-controller-manager-operator
+      cert-syncer
+    Args:
+      --kubeconfig=/etc/kubernetes/static-pod-resources/configmaps/kube-controller-cert-syncer-kubeconfig/kubeconfig
+      --namespace=$(POD_NAMESPACE)
+      --destination-dir=/etc/kubernetes/static-pod-certs
+    State:          Running
+      Started:      Thu, 02 Oct 2025 17:20:52 +0200
+    Ready:          True
+    Restart Count:  20
+    Requests:
+      cpu:     5m
+      memory:  50Mi
+    Environment:
+      POD_NAME:       kube-controller-manager-2e-4a-56-84-ba-01 (v1:metadata.name)
+      POD_NAMESPACE:  openshift-kube-controller-manager (v1:metadata.namespace)
+    Mounts:
+      /etc/kubernetes/static-pod-certs from cert-dir (rw)
+      /etc/kubernetes/static-pod-resources from resource-dir (rw)
+  kube-controller-manager-recovery-controller:
+    Container ID:  cri-o://cf6e6cc34dd42f2975565a22b03403bb9198788834d514b7df5dcad3d65b0536
+    Image:         quay.io/okd/scos-content@sha256:9495d1004cbb8950381ea80897a391971239b0a1fc52783cba6da05f9bdd1de9
+    Image ID:      quay.io/okd/scos-content@sha256:89edc0cd6d0e1d18abd5f9d1896c7f2ee3bf9c9152326ea339cb3c36312e0848
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/bash
+      -euxo
+      pipefail
+      -c
+    Args:
+      timeout 3m /bin/bash -exuo pipefail -c 'while [ -n "$(ss -Htanop \( sport = 9443 \))" ]; do sleep 1; done'
+      
+      exec cluster-kube-controller-manager-operator cert-recovery-controller --kubeconfig=/etc/kubernetes/static-pod-resources/configmaps/kube-controller-cert-syncer-kubeconfig/kubeconfig --namespace=${POD_NAMESPACE} --listen=0.0.0.0:9443 -v=2
+    State:          Running
+      Started:      Thu, 02 Oct 2025 17:20:52 +0200
+    Ready:          True
+    Restart Count:  20
+    Requests:
+      cpu:     5m
+      memory:  50Mi
+    Environment:
+      POD_NAMESPACE:  openshift-kube-controller-manager (v1:metadata.namespace)
+    Mounts:
+      /etc/kubernetes/static-pod-certs from cert-dir (rw)
+      /etc/kubernetes/static-pod-resources from resource-dir (rw)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  resource-dir:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/kubernetes/static-pod-resources/kube-controller-manager-pod-11
+    HostPathType:  
+  cert-dir:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/kubernetes/static-pod-resources/kube-controller-manager-certs
+    HostPathType:  
+QoS Class:         Burstable
+Node-Selectors:    <none>
+Tolerations:       op=Exists
+Events:
+  Type     Reason      Age                   From     Message
+  ----     ------      ----                  ----     -------
+  Warning  ProbeError  4h3m (x8 over 4h23m)  kubelet  Startup probe error: Get "https://10.16.22.72:10357/healthz": context deadline exceeded
+body:
+  Warning  ProbeError  3h39m (x27 over 4h24m)  kubelet  Startup probe error: Get "https://10.16.22.72:10357/healthz": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+body:
+  Normal   Killing     3h39m (x17 over 4h24m)   kubelet  Container cluster-policy-controller failed startup probe, will be restarted
+  Normal   Pulled      3h33m (x19 over 4h24m)   kubelet  Container image "quay.io/okd/scos-content@sha256:4da976ce504dda05b7dde7c47c52e26f4de5f4d1f387c11367feee1c0bcaa893" already present on machine
+  Warning  BackOff     3h29m (x225 over 4h23m)  kubelet  Back-off restarting failed container cluster-policy-controller in pod kube-controller-manager-2e-4a-56-84-ba-01_openshift-kube-controller-manager(770ff4927e4333b112ff003bfe2bb549)
+  Normal   Pulled      3h26m                    kubelet  Container image "quay.io/okd/scos-content@sha256:59f5ee8e2cc0067ebcb8b5c298d68c456969683f0d445510e46ee652e9e90562" already present on machine
+  Normal   Created     3h26m                    kubelet  Created container: kube-controller-manager-cert-syncer
+  Normal   Pulled      3h26m                    kubelet  Container image "quay.io/okd/scos-content@sha256:9495d1004cbb8950381ea80897a391971239b0a1fc52783cba6da05f9bdd1de9" already present on machine
+  Normal   Started     3h26m                    kubelet  Started container kube-controller-manager
+  Normal   Started     3h26m                    kubelet  Started container kube-controller-manager-recovery-controller
+  Normal   Created     3h26m                    kubelet  Created container: kube-controller-manager-recovery-controller
+  Normal   Pulled      3h26m                    kubelet  Container image "quay.io/okd/scos-content@sha256:9495d1004cbb8950381ea80897a391971239b0a1fc52783cba6da05f9bdd1de9" already present on machine
+  Normal   Created     3h26m                    kubelet  Created container: kube-controller-manager
+  Normal   Started     3h26m                    kubelet  Started container kube-controller-manager-cert-syncer
+  Warning  ProbeError  3h26m                    kubelet  Startup probe error: Get "https://10.16.22.72:10257/healthz": dial tcp 10.16.22.72:10257: connect: connection refused
+body:
+  Warning  Unhealthy   3h26m                  kubelet  Startup probe failed: Get "https://10.16.22.72:10257/healthz": dial tcp 10.16.22.72:10257: connect: connection refused
+  Normal   Started     3h24m (x4 over 3h26m)  kubelet  Started container cluster-policy-controller
+  Normal   Created     3h24m (x4 over 3h26m)  kubelet  Created container: cluster-policy-controller
+  Warning  Unhealthy   3h24m (x6 over 3h25m)  kubelet  Startup probe failed: Get "https://10.16.22.72:10357/healthz": context deadline exceeded
+  Warning  Unhealthy   3h24m (x5 over 3h25m)  kubelet  Startup probe failed: Get "https://10.16.22.72:10357/healthz": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+  Warning  ProbeError  3h5m (x12 over 3h25m)  kubelet  Startup probe error: Get "https://10.16.22.72:10357/healthz": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+body:
+  Warning  ProbeError  160m (x29 over 3h25m)  kubelet  Startup probe error: Get "https://10.16.22.72:10357/healthz": context deadline exceeded
+body:
+  Normal   Killing     130m (x29 over 3h25m)  kubelet  Container cluster-policy-controller failed startup probe, will be restarted
+  Warning  ProbeError  130m                   kubelet  Startup probe error: Get "https://10.16.22.72:10357/healthz": read tcp 10.16.22.72:32854->10.16.22.72:10357: read: connection reset by peer
+body:
+  Normal   Pulled      112m (x35 over 3h26m)   kubelet  Container image "quay.io/okd/scos-content@sha256:4da976ce504dda05b7dde7c47c52e26f4de5f4d1f387c11367feee1c0bcaa893" already present on machine
+  Warning  BackOff     110m (x396 over 3h23m)  kubelet  Back-off restarting failed container cluster-policy-controller in pod kube-controller-manager-2e-4a-56-84-ba-01_openshift-kube-controller-manager(770ff4927e4333b112ff003bfe2bb549)
+  Normal   Pulling     106m                    kubelet  Pulling image "quay.io/okd/scos-content@sha256:59f5ee8e2cc0067ebcb8b5c298d68c456969683f0d445510e46ee652e9e90562"
+  Normal   Created     106m                    kubelet  Created container: kube-controller-manager
+  Normal   Pulled      106m                    kubelet  Successfully pulled image "quay.io/okd/scos-content@sha256:59f5ee8e2cc0067ebcb8b5c298d68c456969683f0d445510e46ee652e9e90562" in 20.187s (20.187s including waiting). Image size: 682303111 bytes.
+  Normal   Started     106m                    kubelet  Started container kube-controller-manager
+  Normal   Pulling     106m                    kubelet  Pulling image "quay.io/okd/scos-content@sha256:4da976ce504dda05b7dde7c47c52e26f4de5f4d1f387c11367feee1c0bcaa893"
+  Normal   Pulling     105m                    kubelet  Pulling image "quay.io/okd/scos-content@sha256:9495d1004cbb8950381ea80897a391971239b0a1fc52783cba6da05f9bdd1de9"
+  Normal   Pulled      105m                    kubelet  Successfully pulled image "quay.io/okd/scos-content@sha256:4da976ce504dda05b7dde7c47c52e26f4de5f4d1f387c11367feee1c0bcaa893" in 12.903s (12.903s including waiting). Image size: 358641742 bytes.
+  Normal   Pulled      105m                    kubelet  Successfully pulled image "quay.io/okd/scos-content@sha256:9495d1004cbb8950381ea80897a391971239b0a1fc52783cba6da05f9bdd1de9" in 5.167s (5.167s including waiting). Image size: 362496440 bytes.
+  Normal   Created     105m                    kubelet  Created container: kube-controller-manager-cert-syncer
+  Normal   Started     105m                    kubelet  Started container kube-controller-manager-cert-syncer
+  Normal   Pulled      105m                    kubelet  Container image "quay.io/okd/scos-content@sha256:9495d1004cbb8950381ea80897a391971239b0a1fc52783cba6da05f9bdd1de9" already present on machine
+  Normal   Created     105m                    kubelet  Created container: kube-controller-manager-recovery-controller
+  Normal   Started     105m                    kubelet  Started container kube-controller-manager-recovery-controller
+  Warning  Unhealthy   105m                    kubelet  Startup probe failed: Get "https://10.16.22.72:10357/healthz": read tcp 10.16.22.72:43100->10.16.22.72:10357: read: connection reset by peer
+  Warning  ProbeError  105m                    kubelet  Startup probe error: Get "https://10.16.22.72:10357/healthz": read tcp 10.16.22.72:43100->10.16.22.72:10357: read: connection reset by peer
+body:
+  Warning  ProbeError  103m  kubelet  Startup probe error: Get "https://10.16.22.72:10357/healthz": read tcp 10.16.22.72:55442->10.16.22.72:10357: read: connection reset by peer
+body:
+  Warning  Unhealthy   103m                 kubelet  Startup probe failed: Get "https://10.16.22.72:10357/healthz": read tcp 10.16.22.72:55442->10.16.22.72:10357: read: connection reset by peer
+  Normal   Started     103m (x3 over 105m)  kubelet  Started container cluster-policy-controller
+  Normal   Created     103m (x3 over 105m)  kubelet  Created container: cluster-policy-controller
+  Warning  Unhealthy   102m (x2 over 103m)  kubelet  Startup probe failed: Get "https://10.16.22.72:10357/healthz": context deadline exceeded
+  Warning  ProbeError  102m                 kubelet  Startup probe error: Get "https://10.16.22.72:10357/healthz": read tcp 10.16.22.72:53492->10.16.22.72:10357: read: connection reset by peer
+body:
+  Warning  Unhealthy   102m                 kubelet  Startup probe failed: Get "https://10.16.22.72:10357/healthz": read tcp 10.16.22.72:53492->10.16.22.72:10357: read: connection reset by peer
+  Warning  Unhealthy   102m (x6 over 105m)  kubelet  Startup probe failed: Get "https://10.16.22.72:10357/healthz": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+  Warning  ProbeError  102m                 kubelet  Startup probe error: Get "https://10.16.22.72:10357/healthz": read tcp 10.16.22.72:41926->10.16.22.72:10357: read: connection reset by peer
+body:
+  Warning  Unhealthy   102m                 kubelet  Startup probe failed: Get "https://10.16.22.72:10357/healthz": read tcp 10.16.22.72:41926->10.16.22.72:10357: read: connection reset by peer
+  Warning  ProbeError  35m (x40 over 105m)  kubelet  Startup probe error: Get "https://10.16.22.72:10357/healthz": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+body:
+  Normal   Killing     10m (x35 over 105m)  kubelet  Container cluster-policy-controller failed startup probe, will be restarted
+  Warning  ProbeError  10m (x37 over 103m)  kubelet  Startup probe error: Get "https://10.16.22.72:10357/healthz": context deadline exceeded
+body:
+  Normal   Pulled   5m13s (x36 over 104m)  kubelet  Container image "quay.io/okd/scos-content@sha256:4da976ce504dda05b7dde7c47c52e26f4de5f4d1f387c11367feee1c0bcaa893" already present on machine
+  Warning  BackOff  36s (x421 over 101m)   kubelet  Back-off restarting failed container cluster-policy-controller in pod kube-controller-manager-2e-4a-56-84-ba-01_openshift-kube-controller-manager(770ff4927e4333b112ff003bfe2bb549)
