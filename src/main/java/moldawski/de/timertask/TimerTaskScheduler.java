@@ -17,6 +17,8 @@ public class TimerTaskScheduler {
 
     @Scheduled(fixedRate = 10)
     public void runScheduled() {
+    	System.out.println("Running the scheduled timer task...");
         timerTaskBean.run();
+    	System.out.println("Running the scheduled timer task... End");
     }
 }
