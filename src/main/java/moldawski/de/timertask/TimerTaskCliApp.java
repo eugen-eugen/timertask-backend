@@ -21,6 +21,7 @@ public class TimerTaskCliApp {
         return args -> {
             timerTaskBean.run();
             System.out.println("Bye, I am done");
+            System.out.flush();
             System.exit(0);
         };
     }
