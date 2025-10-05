@@ -20,6 +20,7 @@ public class TimerTaskCliApp {
     public CommandLineRunner runTimerTaskOnce(TimerTaskBean timerTaskBean) {
         return args -> {
             timerTaskBean.run();
+            System.out.println("Bye, I am done");
             System.exit(0);
         };
     }

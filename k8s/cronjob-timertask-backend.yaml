@@ -26,6 +26,7 @@ spec:
               imagePullPolicy: IfNotPresent
               command:
                 - java
+                - -Djava.io.tmpdir=/app/tmp
                 - -jar
                 - /app/app.jar
               env:
@@ -46,10 +47,16 @@ spec:
                   drop: ["ALL"]
                 seccompProfile:
                   type: RuntimeDefault
+              volumeMounts:
+                - name: tmp-dir
+                  mountPath: /app/tmp
           securityContext:
             runAsNonRoot: true
             seccompProfile:
               type: RuntimeDefault
+          volumes:
+            - name: tmp-dir
+              emptyDir: {}
           # imagePullSecrets:
           #   - name: ghcr-pull-secret
 
