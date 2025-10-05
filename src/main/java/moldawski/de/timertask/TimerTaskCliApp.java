@@ -19,6 +19,7 @@ public class TimerTaskCliApp {
     @Bean
     public CommandLineRunner runTimerTaskOnce(TimerTaskBean timerTaskBean) {
         return args -> {
+        	System.out.println("Starting the timer task...");
             timerTaskBean.run();
             System.out.println("Bye, I am done");
             System.out.flush();
